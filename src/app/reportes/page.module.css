@@ -1,0 +1,152 @@
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.exportBtn {
+  background-color: var(--primary);
+  color: white;
+  padding: 8px 16px;
+  border-radius: var(--border-radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s;
+}
+
+.exportBtn:hover {
+  background-color: var(--primary-hover);
+}
+
+/* Top Cards Grid */
+.topGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius-md);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.cardTitle {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Inventory List */
+.inventoryList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.inventoryItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius-sm);
+}
+
+.inventoryItemName {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.inventoryItemDays {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.inventoryItemBadge {
+  background-color: var(--danger);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 9999px;
+}
+
+/* Margin Table */
+.tableContainer {
+  margin-top: 16px;
+  overflow-x: auto;
+}
+
+.marginTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.marginTable th {
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+}
+
+.marginTable td {
+  padding: 16px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.marginTable tr:last-child td {
+  border-bottom: none;
+}
+
+.productCol {
+  font-weight: 500;
+}
+
+.deptCol {
+  color: var(--text-secondary);
+}
+
+.margenBadge {
+  background-color: var(--primary);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 9999px;
+}
+
+/* For slightly lighter badges like in the screenshot for lower percentages */
+.margenBadgeMedium {
+  background-color: #6366F1;
+}
+
+.margenBadgeLow {
+  background-color: #818CF8;
+}

@@ -1,0 +1,118 @@
+.header {
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+}
+
+.breadcrumb {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.storeName {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.currentPage {
+  color: var(--text-primary);
+}
+
+.statusGroup {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.statusIndicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dotOnline, .dotApproved {
+  background-color: var(--success);
+}
+
+.viewStoreBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius-sm);
+  color: var(--text-primary);
+  transition: all 0.2s;
+}
+
+.viewStoreBtn:hover {
+  background-color: var(--background);
+}
+
+.navigation {
+  display: flex;
+  padding: 0 24px;
+  gap: 24px;
+  align-items: center;
+}
+
+.navItem {
+  padding: 12px 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.navItem:hover {
+  color: var(--text-primary);
+}
+
+.navItem.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+.navSpacer {
+  flex: 1;
+}
+
+.navControls {
+  display: flex;
+  flex-direction: column;
+  background-color: #333;
+  color: white;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.scrollBtn {
+  padding: 2px 6px;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.scrollBtn:hover {
+  background-color: #555;
+}

@@ -1,0 +1,297 @@
+.headerBanner {
+  background-color: var(--secondary);
+  color: white;
+  border-radius: var(--border-radius-md);
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 24px;
+}
+
+.bannerSectionTitle {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.inventoryStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.statLabel {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.statBar {
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+.statBarFill {
+  height: 100%;
+  background-color: var(--primary);
+  border-radius: 2px;
+}
+
+.statSubtext {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.inventoryValue {
+  display: flex;
+  flex-direction: column;
+}
+
+.valueHeader {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.totalValue {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.departmentValues {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.valueBar {
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  display: flex;
+  overflow: hidden;
+}
+
+.valueSegment {
+  height: 100%;
+}
+
+/* Tabs & Actions */
+.actionsRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+
+.tabs {
+  display: flex;
+  gap: 24px;
+}
+
+.tab {
+  padding: 12px 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tab:hover {
+  color: var(--text-primary);
+}
+
+.tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+.tabCount {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+/* Table Area */
+.tableControls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--surface);
+  width: 300px;
+}
+
+.searchInput {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  width: 100%;
+}
+
+.sortSelect {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--surface);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.tableCard {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.productTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.productTable th {
+  text-align: left;
+  padding: 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border);
+}
+
+.productTable td {
+  padding: 16px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--border-light);
+  vertical-align: middle;
+}
+
+.productCell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.productImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  object-fit: cover;
+  background-color: var(--background);
+}
+
+.productName {
+  font-weight: 500;
+}
+
+.skuText {
+  color: var(--primary);
+  font-size: 13px;
+}
+
+.inventoryText {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.inventoryZero {
+  color: var(--danger);
+}
+
+/* Badges specifically for state */
+.stateBadge {
+  display: inline-flex;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.stateBorrador {
+  background-color: var(--primary-light);
+  color: var(--primary);
+}
+
+.statePublicado {
+  background-color: var(--primary);
+  color: white;
+}
+
+.stateSinExistencias {
+  background-color: var(--danger);
+  color: white;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.pageInfo {
+  font-size: 14px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pageInput {
+  width: 40px;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  text-align: center;
+}
+
+.pageControls {
+  display: flex;
+  gap: 8px;
+}
+
+.pageBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background-color: var(--surface);
+  color: var(--text-secondary);
+}
+
+.pageBtn:hover {
+  background-color: var(--background);
+}

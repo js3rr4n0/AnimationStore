@@ -1,0 +1,311 @@
+.pageHeader {
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* Table Controls */
+.tableControls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background-color: var(--background);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  width: 350px;
+}
+
+.searchInput {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 14px;
+  width: 100%;
+}
+
+.filterSelect {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius-sm);
+  background-color: var(--background);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Table */
+.tableCard {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.clientTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.clientTable th {
+  text-align: left;
+  padding: 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border);
+}
+
+.clientTable td {
+  padding: 16px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--border-light);
+  vertical-align: middle;
+}
+
+.clientRow {
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.clientRow:hover {
+  background-color: var(--background);
+}
+
+.clientCell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background-color: var(--primary-light);
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 50%;
+}
+
+.clientName {
+  font-weight: 500;
+}
+
+.correoText {
+  color: var(--text-secondary);
+}
+
+.ordenesBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background-color: var(--primary-light);
+  color: var(--primary);
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.totalText {
+  font-weight: 600;
+}
+
+/* Drawer / Side Panel */
+.drawerOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 100;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.drawer {
+  width: 400px;
+  background-color: var(--surface);
+  height: 100%;
+  box-shadow: -4px 0 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.drawerHeader {
+  padding: 24px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: transparent;
+}
+
+.closeBtn:hover {
+  background-color: var(--background);
+}
+
+.drawerTitle {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.drawerSubtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.drawerContent {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Stats Cards in Drawer */
+.statsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.statCard {
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius-md);
+  padding: 16px;
+}
+
+.statCardLabel {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.statCardValue {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* Contact Info */
+.contactInfo {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.contactInfo span {
+  display: block;
+}
+
+/* Purchase History */
+.historySectionTitle {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.historyList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.historyItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius-sm);
+  padding: 16px;
+}
+
+.historyOrderId {
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.historyOrderDate {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.historyOrderRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.historyOrderTotal {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Badges */
+.stateBadge {
+  display: inline-flex;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.statePendiente {
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+.stateProcesada {
+  background-color: var(--primary);
+  color: white;
+}
+
+.stateCancelada {
+  background-color: var(--danger);
+  color: white;
+}

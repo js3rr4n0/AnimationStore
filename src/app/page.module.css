@@ -1,0 +1,196 @@
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.welcomeTitle {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+/* Metric Cards */
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.metricCard {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius-md);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.metricValue {
+  font-size: 28px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.metricChange {
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.metricChange.positive {
+  color: var(--success);
+}
+
+.metricChange.negative {
+  color: var(--danger);
+}
+
+.metricLabel {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* Main Grid (Chart + Alerts) */
+.mainGrid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.chartCard, .alertsCard {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius-md);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Alerts */
+.alertsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.alertItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius-md);
+  background-color: var(--surface);
+}
+
+.alertItemLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.alertIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--border-radius-sm);
+}
+
+.alertIconWarning { background-color: var(--warning-light); color: var(--warning); }
+.alertIconInfo { background-color: var(--primary-light); color: var(--primary); }
+.alertIconDanger { background-color: var(--danger-light); color: var(--danger); }
+
+.alertCount {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+/* Top Products */
+.topProductsCard {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius-md);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.productList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.productItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.productItem:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.productInfo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.productRank {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background-color: var(--background);
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.productName {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.productStats {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.productUnits {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+  background-color: var(--primary-light);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.productRevenue {
+  font-size: 14px;
+  font-weight: 600;
+  width: 60px;
+  text-align: right;
+}

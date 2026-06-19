@@ -1,65 +1,147 @@
-import Image from "next/image";
+"use client";
+
+import { FileText, TrendingUp, TrendingDown, Package, ShoppingCart, Clock } from "lucide-react";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import styles from "./page.module.css";
+
+const chartData = [
+  { name: '1', value: 340 },
+  { name: '6', value: 420 },
+  { name: '11', value: 300 },
+  { name: '16', value: 420 },
+  { name: '21', value: 650 },
+  { name: '26', value: 580 },
+  { name: '30', value: 450 },
+];
+
+const topProducts = [
+  { id: 1, name: "Figura Q Posket Princesa Estelar", units: 3, revenue: 68.97 },
+  { id: 2, name: "Llavero Acrílico Mascota Kawaii", units: 2, revenue: 11.98 },
+  { id: 3, name: "Figura Escala 1/7 Guerrera Celestial", units: 1, revenue: 89.99 },
+  { id: 4, name: "Gunpla RG Mecha Asalto", units: 1, revenue: 39.99 },
+  { id: 5, name: "Estatua Samurái Edición Premium", units: 1, revenue: 159.99 },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      <div className={styles.pageHeader}>
+        <h1 className={styles.welcomeTitle}>Bienvenido a tu dashboard, JULIO CESAR</h1>
+        <button className="btn btn-outline" style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <FileText size={16} /> Generar reporte
+        </button>
+      </div>
+
+      <div className={styles.metricsGrid}>
+        <div className={styles.metricCard}>
+          <div className={styles.metricValue}>
+            $370.92
+            <span className={`${styles.metricChange} ${styles.positive}`}>
+              <TrendingUp size={14} /> 12.4%
+            </span>
+          </div>
+          <div className={styles.metricLabel}>Total generado en el mes</div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        
+        <div className={styles.metricCard}>
+          <div className={styles.metricValue}>
+            5
+            <span className={`${styles.metricChange} ${styles.positive}`}>
+              <TrendingUp size={14} /> 8.1%
+            </span>
+          </div>
+          <div className={styles.metricLabel}>Total de órdenes registradas</div>
         </div>
-      </main>
-    </div>
+        
+        <div className={styles.metricCard}>
+          <div className={styles.metricValue}>
+            $74.18
+            <span className={`${styles.metricChange} ${styles.negative}`}>
+              <TrendingDown size={14} /> 2.3%
+            </span>
+          </div>
+          <div className={styles.metricLabel}>Promedio de compras</div>
+        </div>
+      </div>
+
+      <div className={styles.mainGrid}>
+        <div className={styles.chartCard}>
+          <h2 className={styles.sectionTitle}>Ventas de los últimos 30 días</h2>
+          <div style={{ height: '300px', width: '100%', marginTop: '20px' }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={chartData} margin={{ top: 10, right: 0, left: -20, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#4F46E5" stopOpacity={0.3}/>
+                    <stop offset="95%" stopColor="#4F46E5" stopOpacity={0}/>
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
+                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#9CA3AF', fontSize: 12}} dy={10} />
+                <YAxis axisLine={false} tickLine={false} tickFormatter={(value) => `$${value}`} tick={{fill: '#9CA3AF', fontSize: 12}} />
+                <Tooltip 
+                  contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}
+                  formatter={(value: number) => [`$${value}`, 'Ventas']}
+                />
+                <Area type="monotone" dataKey="value" stroke="#4F46E5" strokeWidth={2} fillOpacity={1} fill="url(#colorValue)" />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        <div className={styles.alertsCard}>
+          <h2 className={styles.sectionTitle}>Panel de alertas</h2>
+          <div className={styles.alertsList}>
+            <div className={styles.alertItem}>
+              <div className={styles.alertItemLeft}>
+                <div className={`${styles.alertIcon} ${styles.alertIconWarning}`}>
+                  <Package size={16} />
+                </div>
+                Productos en stock bajo
+              </div>
+              <div className={styles.alertCount}>3</div>
+            </div>
+            
+            <div className={styles.alertItem}>
+              <div className={styles.alertItemLeft}>
+                <div className={`${styles.alertIcon} ${styles.alertIconInfo}`}>
+                  <ShoppingCart size={16} />
+                </div>
+                Órdenes pendientes
+              </div>
+              <div className={styles.alertCount}>1</div>
+            </div>
+            
+            <div className={styles.alertItem}>
+              <div className={styles.alertItemLeft}>
+                <div className={`${styles.alertIcon} ${styles.alertIconDanger}`}>
+                  <Clock size={16} />
+                </div>
+                Stock de 91+ días
+              </div>
+              <div className={styles.alertCount}>3</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.topProductsCard}>
+        <h2 className={styles.sectionTitle}>Top 5 productos más vendidos</h2>
+        <div className={styles.productList}>
+          {topProducts.map((product) => (
+            <div key={product.id} className={styles.productItem}>
+              <div className={styles.productInfo}>
+                <div className={styles.productRank}>{product.id}</div>
+                <div className={styles.productName}>{product.name}</div>
+              </div>
+              <div className={styles.productStats}>
+                <div className={styles.productUnits}>{product.units} uds.</div>
+                <div className={styles.productRevenue}>${product.revenue.toFixed(2)}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
   );
 }
