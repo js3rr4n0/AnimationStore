@@ -81,7 +81,7 @@ export default function Home() {
                 <YAxis axisLine={false} tickLine={false} tickFormatter={(value) => `$${value}`} tick={{fill: '#9CA3AF', fontSize: 12}} />
                 <Tooltip 
                   contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}
-                  formatter={(value: number) => [`$${value}`, 'Ventas']}
+                  formatter={(value: any) => [`$${value}`, 'Ventas']}
                 />
                 <Area type="monotone" dataKey="value" stroke="#4F46E5" strokeWidth={2} fillOpacity={1} fill="url(#colorValue)" />
               </AreaChart>
