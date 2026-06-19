@@ -1,147 +1,93 @@
-"use client";
+import { sql } from "@vercel/postgres";
+import DashboardClient from "./DashboardClient";
 
-import { FileText, TrendingUp, TrendingDown, Package, ShoppingCart, Clock } from "lucide-react";
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import styles from "./page.module.css";
+export const dynamic = "force-dynamic";
 
-const chartData = [
-  { name: '1', value: 340 },
-  { name: '6', value: 420 },
-  { name: '11', value: 300 },
-  { name: '16', value: 420 },
-  { name: '21', value: 650 },
-  { name: '26', value: 580 },
-  { name: '30', value: 450 },
-];
+export default async function Home() {
+  // 1. Fetch Global Stats
+  const { rows: statsData } = await sql`
+    SELECT 
+      COUNT(*) as total_orders, 
+      COALESCE(SUM(total), 0) as total_revenue
+    FROM animation_store.ordenes
+  `;
+  const totalOrders = Number(statsData[0].total_orders);
+  const totalRevenue = Number(statsData[0].total_revenue);
+  const averageOrder = totalOrders > 0 ? totalRevenue / totalOrders : 0;
 
-const topProducts = [
-  { id: 1, name: "Figura Q Posket Princesa Estelar", units: 3, revenue: 68.97 },
-  { id: 2, name: "Llavero Acrílico Mascota Kawaii", units: 2, revenue: 11.98 },
-  { id: 3, name: "Figura Escala 1/7 Guerrera Celestial", units: 1, revenue: 89.99 },
-  { id: 4, name: "Gunpla RG Mecha Asalto", units: 1, revenue: 39.99 },
-  { id: 5, name: "Estatua Samurái Edición Premium", units: 1, revenue: 159.99 },
-];
+  // 2. Fetch Chart Data (Last 30 days orders)
+  const { rows: last30Orders } = await sql`
+    SELECT total, creado_en 
+    FROM animation_store.ordenes 
+    WHERE creado_en >= NOW() - INTERVAL '30 days'
+  `;
 
-export default function Home() {
+  // Process chart data: create an array of last 30 days
+  const chartData = [];
+  const today = new Date();
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(today.getDate() - i);
+    const dayString = d.getDate().toString();
+    
+    // Sum total for this specific date
+    const dayTotal = last30Orders.reduce((acc, order) => {
+      const orderDate = new Date(order.creado_en);
+      if (orderDate.getDate() === d.getDate() && orderDate.getMonth() === d.getMonth()) {
+        return acc + Number(order.total);
+      }
+      return acc;
+    }, 0);
+
+    // To keep it clean, only add a point every ~5 days or just all 30 days
+    // Recharts handles all points well. We will pass all 30 points.
+    chartData.push({
+      name: dayString,
+      value: dayTotal
+    });
+  }
+
+  // 3. Fetch Alerts
+  const { rows: alertLowStock } = await sql`
+    SELECT COUNT(*) as count FROM animation_store.productos WHERE stock > 0 AND stock <= 5
+  `;
+  const { rows: alertPending } = await sql`
+    SELECT COUNT(*) as count FROM animation_store.ordenes WHERE estado = 'pendiente'
+  `;
+  const { rows: alertOldStock } = await sql`
+    SELECT COUNT(*) as count FROM animation_store.productos WHERE creado_en < NOW() - INTERVAL '91 days'
+  `;
+
+  // 4. Fetch Top Products
+  const { rows: topProductsData } = await sql`
+    SELECT 
+      producto_id as id, 
+      nombre_producto as name, 
+      SUM(cantidad) as units, 
+      SUM(subtotal) as revenue
+    FROM animation_store.orden_items
+    GROUP BY producto_id, nombre_producto
+    ORDER BY units DESC
+    LIMIT 5
+  `;
+
   return (
-    <>
-      <div className={styles.pageHeader}>
-        <h1 className={styles.welcomeTitle}>Bienvenido a tu dashboard, JULIO CESAR</h1>
-        <button className="btn btn-outline" style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-          <FileText size={16} /> Generar reporte
-        </button>
-      </div>
-
-      <div className={styles.metricsGrid}>
-        <div className={styles.metricCard}>
-          <div className={styles.metricValue}>
-            $370.92
-            <span className={`${styles.metricChange} ${styles.positive}`}>
-              <TrendingUp size={14} /> 12.4%
-            </span>
-          </div>
-          <div className={styles.metricLabel}>Total generado en el mes</div>
-        </div>
-        
-        <div className={styles.metricCard}>
-          <div className={styles.metricValue}>
-            5
-            <span className={`${styles.metricChange} ${styles.positive}`}>
-              <TrendingUp size={14} /> 8.1%
-            </span>
-          </div>
-          <div className={styles.metricLabel}>Total de órdenes registradas</div>
-        </div>
-        
-        <div className={styles.metricCard}>
-          <div className={styles.metricValue}>
-            $74.18
-            <span className={`${styles.metricChange} ${styles.negative}`}>
-              <TrendingDown size={14} /> 2.3%
-            </span>
-          </div>
-          <div className={styles.metricLabel}>Promedio de compras</div>
-        </div>
-      </div>
-
-      <div className={styles.mainGrid}>
-        <div className={styles.chartCard}>
-          <h2 className={styles.sectionTitle}>Ventas de los últimos 30 días</h2>
-          <div style={{ height: '300px', width: '100%', marginTop: '20px' }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={chartData} margin={{ top: 10, right: 0, left: -20, bottom: 0 }}>
-                <defs>
-                  <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#4F46E5" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#4F46E5" stopOpacity={0}/>
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#9CA3AF', fontSize: 12}} dy={10} />
-                <YAxis axisLine={false} tickLine={false} tickFormatter={(value) => `$${value}`} tick={{fill: '#9CA3AF', fontSize: 12}} />
-                <Tooltip 
-                  contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}
-                  formatter={(value: any) => [`$${value}`, 'Ventas']}
-                />
-                <Area type="monotone" dataKey="value" stroke="#4F46E5" strokeWidth={2} fillOpacity={1} fill="url(#colorValue)" />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-
-        <div className={styles.alertsCard}>
-          <h2 className={styles.sectionTitle}>Panel de alertas</h2>
-          <div className={styles.alertsList}>
-            <div className={styles.alertItem}>
-              <div className={styles.alertItemLeft}>
-                <div className={`${styles.alertIcon} ${styles.alertIconWarning}`}>
-                  <Package size={16} />
-                </div>
-                Productos en stock bajo
-              </div>
-              <div className={styles.alertCount}>3</div>
-            </div>
-            
-            <div className={styles.alertItem}>
-              <div className={styles.alertItemLeft}>
-                <div className={`${styles.alertIcon} ${styles.alertIconInfo}`}>
-                  <ShoppingCart size={16} />
-                </div>
-                Órdenes pendientes
-              </div>
-              <div className={styles.alertCount}>1</div>
-            </div>
-            
-            <div className={styles.alertItem}>
-              <div className={styles.alertItemLeft}>
-                <div className={`${styles.alertIcon} ${styles.alertIconDanger}`}>
-                  <Clock size={16} />
-                </div>
-                Stock de 91+ días
-              </div>
-              <div className={styles.alertCount}>3</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className={styles.topProductsCard}>
-        <h2 className={styles.sectionTitle}>Top 5 productos más vendidos</h2>
-        <div className={styles.productList}>
-          {topProducts.map((product) => (
-            <div key={product.id} className={styles.productItem}>
-              <div className={styles.productInfo}>
-                <div className={styles.productRank}>{product.id}</div>
-                <div className={styles.productName}>{product.name}</div>
-              </div>
-              <div className={styles.productStats}>
-                <div className={styles.productUnits}>{product.units} uds.</div>
-                <div className={styles.productRevenue}>${product.revenue.toFixed(2)}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </>
+    <DashboardClient 
+      totalRevenue={totalRevenue}
+      totalOrders={totalOrders}
+      averageOrder={averageOrder}
+      chartData={chartData}
+      alerts={{
+        lowStock: Number(alertLowStock[0].count),
+        pendingOrders: Number(alertPending[0].count),
+        oldStock: Number(alertOldStock[0].count)
+      }}
+      topProducts={topProductsData.map(p => ({
+        id: p.id || Math.random(), // just in case it's null
+        name: p.name,
+        units: Number(p.units),
+        revenue: Number(p.revenue)
+      }))}
+    />
   );
 }
