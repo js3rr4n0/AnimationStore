@@ -1,19 +1,23 @@
-"use client";
-
 import Link from "next/link";
 import { Search, Plus, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { sql } from "@vercel/postgres";
 import styles from "./page.module.css";
 
-const products = [
-  { id: 1, name: "Figura Escala Coleccionista (Borrador)", sku: "S-FIG-739281845", stock: 0, variants: 1, price: 119.99, state: "Borrador", dept: "Juguetes", img: "https://placehold.co/80x80/1E1B4B/FFFFFF?text=F" },
-  { id: 2, name: "Gunpla RG Mecha Asalto", sku: "S-GUN-902384756", stock: 27, variants: 1, price: 39.99, state: "Publicado", dept: "Juguetes", img: "https://placehold.co/80x80/4F46E5/FFFFFF?text=G" },
-  { id: 3, name: "Funko Pop Cazador de Sombras", sku: "S-FUN-338945112", stock: 0, variants: 1, price: 14.99, state: "Sin existencias", dept: "Juguetes", img: "https://placehold.co/80x80/10B981/FFFFFF?text=F" },
-  { id: 4, name: "Llavero Acrílico Mascota Kawaii", sku: "S-LLA-228194730", stock: 120, variants: 1, price: 5.99, state: "Publicado", dept: "Juguetes", img: "https://placehold.co/80x80/F59E0B/FFFFFF?text=L" },
-  { id: 5, name: "Figura Escala 1/7 Guerrera Celestial", sku: "S-FIG-204819372", stock: 14, variants: 1, price: 89.99, state: "Publicado", dept: "Juguetes", img: "https://placehold.co/80x80/EF4444/FFFFFF?text=F" },
-  { id: 6, name: "Mousepad XL Gaming Edición Anime", sku: "S-MOU-674839201", stock: 41, variants: 1, price: 19.99, state: "Publicado", dept: "Computación", img: "https://placehold.co/80x80/6366F1/FFFFFF?text=M" },
-];
+export const dynamic = "force-dynamic";
 
-export default function Productos() {
+export default async function Productos() {
+  const { rows: products } = await sql`
+    SELECT 
+      p.id, p.nombre as name, p.sku, p.stock, 
+      (CASE WHEN p.tiene_variaciones THEN 2 ELSE 1 END) as variants, 
+      p.precio_venta as price, p.estado as state, 
+      d.nombre as dept,
+      p.imagen_url as img
+    FROM productos p
+    LEFT JOIN departamentos d ON p.departamento_id = d.id
+    ORDER BY p.creado_en DESC
+  `;
+
   return (
     <>
       <div className={styles.headerBanner}>
@@ -95,30 +99,38 @@ export default function Productos() {
             </tr>
           </thead>
           <tbody>
-            {products.map((prod) => (
-              <tr key={prod.id}>
-                <td><input type="checkbox" /></td>
-                <td>
-                  <div className={styles.productCell}>
-                    <img src={prod.img} alt={prod.name} className={styles.productImage} />
-                    <span className={styles.productName}>{prod.name}</span>
-                  </div>
+            {products.length === 0 ? (
+              <tr>
+                <td colSpan={7} style={{ textAlign: 'center', padding: '40px', color: 'var(--text-secondary)' }}>
+                  No hay productos registrados.
                 </td>
-                <td><span className={styles.skuText}>{prod.sku}</span></td>
-                <td>
-                  <span className={styles.inventoryText}>
-                    <span className={prod.stock === 0 ? styles.inventoryZero : ''}>{prod.stock}</span> en stock para {prod.variants} variante
-                  </span>
-                </td>
-                <td style={{fontWeight: 500}}>${prod.price}</td>
-                <td>
-                  <span className={`${styles.stateBadge} ${styles['state' + prod.state.replace(/\s+/g, '')]}`}>
-                    {prod.state}
-                  </span>
-                </td>
-                <td style={{color: 'var(--text-secondary)'}}>{prod.dept}</td>
               </tr>
-            ))}
+            ) : (
+              products.map((prod) => (
+                <tr key={prod.id}>
+                  <td><input type="checkbox" /></td>
+                  <td>
+                    <div className={styles.productCell}>
+                      <img src={prod.img || "https://placehold.co/80x80/1E1B4B/FFFFFF?text=NA"} alt={prod.name} className={styles.productImage} />
+                      <span className={styles.productName}>{prod.name}</span>
+                    </div>
+                  </td>
+                  <td><span className={styles.skuText}>{prod.sku}</span></td>
+                  <td>
+                    <span className={styles.inventoryText}>
+                      <span className={prod.stock === 0 ? styles.inventoryZero : ''}>{prod.stock}</span> en stock para {prod.variants} variante
+                    </span>
+                  </td>
+                  <td style={{fontWeight: 500}}>${Number(prod.price).toFixed(2)}</td>
+                  <td>
+                    <span className={`${styles.stateBadge} ${styles['state' + String(prod.state).replace(/_/g, '')]}`}>
+                      {prod.state}
+                    </span>
+                  </td>
+                  <td style={{color: 'var(--text-secondary)'}}>{prod.dept || 'Sin dpto.'}</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
         
