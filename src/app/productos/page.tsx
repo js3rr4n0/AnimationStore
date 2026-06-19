@@ -13,8 +13,8 @@ export default async function Productos() {
       p.precio_venta as price, p.estado as state, 
       d.nombre as dept,
       p.imagen_url as img
-    FROM productos p
-    LEFT JOIN departamentos d ON p.departamento_id = d.id
+    FROM animation_store.productos p
+    LEFT JOIN animation_store.departamentos d ON p.departamento_id = d.id
     ORDER BY p.creado_en DESC
   `;
 

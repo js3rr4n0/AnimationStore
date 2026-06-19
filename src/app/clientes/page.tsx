@@ -5,9 +5,10 @@ export const dynamic = "force-dynamic";
 
 export default async function ClientesPage() {
   const { rows: clientesData } = await sql`
-    SELECT id, nombre, correo, telefono, ordenes, total_gastado, creado_en, direccion
-    FROM animation_store.vista_clientes
-    ORDER BY creado_en DESC
+    SELECT v.id, v.nombre, v.correo, v.telefono, v.ordenes, v.total_gastado, v.creado_en, c.direccion
+    FROM animation_store.vista_clientes v
+    JOIN animation_store.clientes c ON v.id = c.id
+    ORDER BY v.creado_en DESC
   `;
 
   const { rows: ordenesData } = await sql`
